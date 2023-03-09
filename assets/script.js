@@ -9,8 +9,8 @@ submitBtn.addEventListener("click",function(event){
     event.preventDefault()
     document.getElementById("forecast-header").value="5-Day Forecast";
     var city = document.getElementById("city-name").value
-    localStorage.setItem("city name", city);  //save search in local storage
     get5dayForecast(city)
+    localStorage.setItem(city, JSON.stringify(apiData));  //save search in local storage
 })
 
 //Get weather data from OpenWeather API
@@ -42,3 +42,21 @@ function get5dayForecast(city){
     })
 }
 
+//Get search history data
+
+function loadCity(){
+    var loadCity = Object.keys(localStorage).sort();
+    console.log(loadCity)
+    if (loadCity == null || loadCity == "") return;
+
+    for (i = 0; i < loadCity.length; i++) {
+        localStorage.getItem(loadCity[i])
+        JSON.parse(apiData)
+        var create = $("<button>")
+        create.attr("class", "city-btn")
+        create.attr("type", "button")
+        create.text(loadCity[i])
+        buttonDiv.prepend(create)
+    }
+}
+loadCity();
